@@ -1,0 +1,101 @@
+.pd-card {
+  max-width: 720px;
+  margin: 24px auto 48px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.pd-media img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.pd-body {
+  padding: 20px;
+}
+
+.pd-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #2b2b2b;
+  margin-bottom: 8px;
+}
+
+.pd-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.pd-description {
+  color: #555;
+  line-height: 1.6;
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.pd-section {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px dashed #e7dcc9;
+}
+
+.pd-allergens {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.pd-chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f6efe3;
+  color: #444;
+  font-size: 13px;
+  border: 1px solid #eadfc8;
+}
+
+.pd-cta {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pd-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #222;
+}
+
+.pd-add {
+  background: #ffcc00;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .2s ease;
+}
+
+.pd-add:hover {
+  background: #ffd633;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+@media (min-width: 768px) {
+  .pd-media img {
+    height: 360px;
+  }
+  .pd-title { font-size: 28px; }
+  .pd-description { font-size: 16px; }
+}

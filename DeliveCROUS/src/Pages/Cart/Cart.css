@@ -1,0 +1,43 @@
+.cart-container { max-width: 960px; margin: 24px auto 48px; padding: 0 16px; }
+.cart-title { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 16px; color:#2b2b2b; }
+.cart-empty { text-align: center; color:#666; }
+
+.cart-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+
+.cart-item { display: flex; gap: 14px; background: #fff; border-radius: 12px; padding: 12px; box-shadow: 0 6px 16px rgba(0,0,0,.05); }
+.cart-item_img { width: 86px; height: 86px; object-fit: cover; border-radius: 10px; }
+.cart-item_info { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.cart-item_title { font-size: 16px; font-weight: 700; color: #2b2b2b; }
+
+.cart-item_meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.cart-item_price { font-weight: 700; color:#222; }
+
+.cart-item_qty { display: inline-flex; align-items: center; gap: 6px; }
+.cart-item_qty input {
+  width: 64px; padding: 6px;
+  border: 1px solid #eadfc8; border-radius: 8px; background: #fffdf7;
+  text-align: center;
+}
+.cart-item_qty button {
+  width: 28px; height: 28px; border-radius: 8px; border: 1px solid #e6d8c3; background: #fff;
+  cursor: pointer;
+}
+.cart-item_qty button:hover { background:#fff8e6; }
+
+.cart-item_remove {
+  align-self: flex-start;
+  background: none; border: 1px solid #e6d8c3; border-radius: 10px;
+  padding: 6px 10px; cursor: pointer;
+}
+.cart-item_remove:hover { background:#fff8e6; }
+
+.cart-summary { margin-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.cart-buttons { display: flex; gap: 10px; }
+.cart-clear { background: none; border: 1px solid #e6d8c3; border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+.cart-checkout { background:#ffcc00; border:none; border-radius: 12px; padding: 10px 14px; font-weight: 700; cursor: pointer; }
+.cart-checkout:hover { background:#ffd633; }
+
+@media (max-width:768px){
+  .cart-summary { flex-direction: column; align-items: stretch; }
+  .cart-item_img { width: 72px; height: 72px; }
+}

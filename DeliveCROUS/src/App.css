@@ -1,0 +1,33 @@
+.App {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 40px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 40px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+
+  .product-list {
+    padding: 20px 10px;
+    gap: 15px;
+  }
+}
+

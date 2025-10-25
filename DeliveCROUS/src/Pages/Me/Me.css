@@ -1,0 +1,121 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.me-page {
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.me-container {
+  max-width: 600px;
+  margin: 80px auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.me-container h2 {
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.me-card {
+  text-align: left;
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.me-card p {
+  font-size: 16px;
+  color: #444;
+}
+
+.logout-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c9302c;
+}
+
+.divider {
+  margin: 40px 0 20px;
+  border: none;
+  border-top: 2px solid #eee;
+}
+
+.me-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.commandes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.commande-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.commande-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commande-statut {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.commande-statut.en-attente { background-color: #ffcc00; color: #000; }
+.commande-statut.en-cours { background-color: #4db6ff; color: #fff; }
+.commande-statut.livrée { background-color: #4caf50; color: #fff; }
+
+.plats-list {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plat-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.plat-nom {
+  font-weight: 600;
+  color: #333;
+}
+
+.no-commandes {
+  font-style: italic;
+  color: #777;
+}
