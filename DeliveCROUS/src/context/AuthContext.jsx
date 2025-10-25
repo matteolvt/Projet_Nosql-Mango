@@ -1,6 +1,5 @@
-// src/context/AuthContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
-import { login as apiLogin, register as apiRegister, getMe } from "../api";
+import api from "../axios"; // 🔗 Axios configuré avec ton back Railway
 
 const AuthContext = createContext(null);
 
@@ -18,8 +17,10 @@ export function AuthProvider({ children }) {
         return;
       }
       try {
-        const me = await getMe(token);
-        setUser(me);
+        const res = await api.get("/api/auth/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(res.data);
       } catch (err) {
         console.error("Erreur AuthContext getMe:", err);
         setUser(null);
@@ -34,7 +35,8 @@ export function AuthProvider({ children }) {
 
   // 🟢 Connexion
   const login = async (credentials) => {
-    const { user: loggedUser, token: newToken } = await apiLogin(credentials);
+    const res = await api.post("/api/auth/login", credentials);
+    const { user: loggedUser, token: newToken } = res.data;
     setUser(loggedUser);
     setToken(newToken);
     localStorage.setItem("token", newToken);
@@ -43,12 +45,13 @@ export function AuthProvider({ children }) {
 
   // 🟢 Inscription
   const register = async (data) => {
-    const createdUser = await apiRegister(data);
-    // après inscription → connexion auto
-    const { user: loggedUser, token: newToken } = await apiLogin({
+    await api.post("/api/auth/register", data); // création du compte
+    // connexion auto après inscription
+    const res = await api.post("/api/auth/login", {
       email: data.email,
       password: data.password,
     });
+    const { user: loggedUser, token: newToken } = res.data;
     setUser(loggedUser);
     setToken(newToken);
     localStorage.setItem("token", newToken);

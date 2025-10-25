@@ -3,22 +3,26 @@ import Navbar from "../../components/Navbar/Navbar";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getPlats } from "../../api";
+import api from "../../axios"; // 🔗 on utilise l’instance Axios connectée à ton back
 
 export default function Home() {
   const [plats, setPlats] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPlats()
-      .then((data) => {
-        setPlats(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchPlats = async () => {
+      try {
+        // 🔥 Appel direct à ton back Railway
+        const res = await api.get("/api/plats");
+        setPlats(res.data);
+      } catch (err) {
         console.error("Erreur chargement plats :", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchPlats();
   }, []);
 
   return (

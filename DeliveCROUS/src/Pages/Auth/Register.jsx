@@ -9,7 +9,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     prenom: "",
-    name: "",
+    nom: "", // 🔄 changé "name" → "nom" (doit correspondre à ton back)
     email: "",
     password: "",
   });
@@ -17,7 +17,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
@@ -29,7 +29,12 @@ export default function Register() {
       await register(form);
       navigate("/");
     } catch (err) {
-      setError(err.message || "Erreur d'inscription");
+      console.error(err);
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Erreur lors de l'inscription. Veuillez réessayer.");
+      }
     } finally {
       setLoading(false);
     }
@@ -60,8 +65,8 @@ export default function Register() {
             Nom
             <input
               type="text"
-              name="name"
-              value={form.name}
+              name="nom"
+              value={form.nom}
               onChange={handleChange}
               required
               placeholder="Dupont"

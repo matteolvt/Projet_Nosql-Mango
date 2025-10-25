@@ -12,7 +12,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
@@ -21,10 +21,17 @@ export default function Login() {
     setLoading(true);
 
     try {
+      // Appel au back via ton AuthContext (déjà connecté à Railway)
       await login(form);
       navigate("/");
     } catch (err) {
-      setError(err.message || "Erreur de connexion");
+      console.error(err);
+      // Gestion propre de l’erreur (message back ou défaut)
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Erreur de connexion. Vérifie ton email et ton mot de passe.");
+      }
     } finally {
       setLoading(false);
     }
