@@ -14,8 +14,8 @@ import Me from "./Pages/Me/Me.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
-import ProtectedRoute from "./components/Route/ProtectedRoute.jsx";
-import AdminRoute from "./components/Route/AdminRoute.jsx";
+import ProtectedRoute from "../components/Route/ProtectedRoute.jsx";
+import AdminRoute from "../components/Route/AdminRoute.jsx";
 import AdminDashboard from "./Pages/Admin/AdminDashboard.jsx";
 
 import "./index.css";
