@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DeliveCROUS – Interface test API</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 20px; }
+    h1, h2 { color: #333; }
+    button {
+      background-color: #007bff; border: none; color: white;
+      padding: 8px 12px; margin: 5px; border-radius: 5px; cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
+    .container {
+      max-width: 1000px; margin: auto; background: white; padding: 20px;
+      border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #e9ecef; }
+    pre {
+      background: #111; color: #0f0; padding: 10px;
+      border-radius: 6px; overflow-x: auto;
+    }
+    input, select {
+      width: 100%; padding: 8px; margin: 5px 0;
+      border-radius: 5px; border: 1px solid #ccc;
+    }
+    #loginSection {
+      background: white; padding: 20px; border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px; margin: 50px auto; text-align: center;
+    }
+    .plat-item {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+    }
+    .plat-item select, .plat-item input { flex: 1; }
+    #adminView, #studentView { display: none; }
+  </style>
+</head>
+<body>
+  <!-- 🔐 Connexion -->
+  <div id="loginSection">
+    <h1>🔐 Connexion</h1>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Mot de passe" required><br>
+    <button id="loginBtn">Se connecter</button>
+    <pre id="loginOutput">...</pre>
+  </div>
+
+  <!-- 👑 Vue admin -->
+  <div id="adminView" class="container">
+    <h1>👑 Tableau de bord Admin</h1>
+    <p id="adminWelcome"></p>
+    <button id="logout">Se déconnecter</button>
+    <hr>
+
+    <h2>👥 Utilisateurs</h2>
+    <button id="getUsers">Voir tous les utilisateurs</button>
+    <table id="usersTable">
+      <thead><tr><th>Nom</th><th>Prénom</th><th>Email</th><th>Rôle</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>🍽️ Plats</h2>
+    <button id="getPlatsAdmin">Voir tous les plats</button>
+    <table id="platsTableAdmin">
+      <thead><tr><th>Nom</th><th>Catégorie</th><th>Prix (€)</th><th>Disponible</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>📦 Commandes</h2>
+    <button id="getCommandesAdmin">Voir les commandes</button>
+    <table id="commandesTableAdmin">
+      <thead><tr><th>ID</th><th>Utilisateur</th><th>Point livraison</th><th>Total (€)</th><th>Statut</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <pre id="adminOutput">...</pre>
+  </div>
+
+  <!-- 🎓 Vue étudiant -->
+  <div id="studentView" class="container">
+    <h1>🎓 Espace Étudiant</h1>
+    <p id="studentWelcome"></p>
+    <button id="logout2">Se déconnecter</button>
+    <hr>
+
+    <h2>🍽️ Plats disponibles</h2>
+    <button id="getPlatsStudent">Afficher les plats</button>
+    <table id="platsTableStudent">
+      <thead><tr><th>Nom</th><th>Catégorie</th><th>Prix (€)</th><th>Allergènes</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>📦 Mes commandes</h2>
+    <button id="getMyCommandes">Afficher mes commandes</button>
+    <table id="commandesTableStudent">
+      <thead><tr><th>ID</th><th>Point livraison</th><th>Total (€)</th><th>Statut</th></tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <pre id="studentOutput">...</pre>
+  </div>
+
+  <script>
+    const API_URL = "http://localhost:3000/api";
+    let token = localStorage.getItem("jwt");
+
+    const loginSection = document.getElementById("loginSection");
+    const adminView = document.getElementById("adminView");
+    const studentView = document.getElementById("studentView");
+
+    const show = (el, data) => el.textContent = JSON.stringify(data, null, 2);
+
+    async function checkRole() {
+      if (!token) {
+        loginSection.style.display = "block";
+        adminView.style.display = "none";
+        studentView.style.display = "none";
+        return;
+      }
+
+      const res = await fetch(`${API_URL}/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const user = await res.json();
+
+      if (user.role === "admin") {
+        loginSection.style.display = "none";
+        adminView.style.display = "block";
+        studentView.style.display = "none";
+        document.getElementById("adminWelcome").textContent = `Bienvenue, ${user.prenom} ${user.nom} (Admin)`;
+      } else {
+        loginSection.style.display = "none";
+        adminView.style.display = "none";
+        studentView.style.display = "block";
+        document.getElementById("studentWelcome").textContent = `Bienvenue, ${user.prenom} ${user.nom}`;
+      }
+    }
+
+    checkRole();
+
+    // Connexion
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      show(document.getElementById("loginOutput"), data);
+
+      if (data.token) {
+        token = data.token;
+        localStorage.setItem("jwt", token);
+        await checkRole();
+      } else {
+        alert("Connexion échouée");
+      }
+    });
+
+    // Déconnexion
+    document.querySelectorAll("#logout, #logout2").forEach(btn => {
+      btn.addEventListener("click", () => {
+        localStorage.removeItem("jwt");
+        window.location.reload();
+      });
+    });
+
+    // Admin : voir utilisateurs
+    document.getElementById("getUsers").addEventListener("click", async () => {
+      const res = await fetch(`${API_URL}/users`, { headers: { Authorization: `Bearer ${token}` } });
+      const users = await res.json();
+      const tbody = document.querySelector("#usersTable tbody");
+      tbody.innerHTML = "";
+      users.forEach(u => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${u.nom}</td><td>${u.prenom}</td><td>${u.email}</td><td>${u.role}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+
+    // Admin : plats
+    document.getElementById("getPlatsAdmin").addEventListener("click", async () => {
+      const res = await fetch(`${API_URL}/plats`);
+      const plats = await res.json();
+      const tbody = document.querySelector("#platsTableAdmin tbody");
+      tbody.innerHTML = "";
+      plats.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${p.nom}</td><td>${p.categorie}</td><td>${p.prix}€</td><td>${p.disponible ? "✅" : "❌"}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+
+    // Admin : commandes
+    document.getElementById("getCommandesAdmin").addEventListener("click", async () => {
+      const res = await fetch(`${API_URL}/commandes`, { headers: { Authorization: `Bearer ${token}` } });
+      const commandes = await res.json();
+      const tbody = document.querySelector("#commandesTableAdmin tbody");
+      tbody.innerHTML = "";
+      commandes.forEach(c => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${c.id}</td><td>${c.user?.prenom || ""}</td><td>${c.pointLivraison}</td><td>${c.total.toFixed(2)}</td><td>${c.statut}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+
+    // Student : plats
+    document.getElementById("getPlatsStudent").addEventListener("click", async () => {
+      const res = await fetch(`${API_URL}/plats`);
+      const plats = await res.json();
+      const tbody = document.querySelector("#platsTableStudent tbody");
+      tbody.innerHTML = "";
+      plats.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${p.nom}</td><td>${p.categorie}</td><td>${p.prix}€</td><td>${p.allergenes || ""}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+
+    // Student : mes commandes
+    document.getElementById("getMyCommandes").addEventListener("click", async () => {
+      const res = await fetch(`${API_URL}/commandes`, { headers: { Authorization: `Bearer ${token}` } });
+      const commandes = await res.json();
+      const tbody = document.querySelector("#commandesTableStudent tbody");
+      tbody.innerHTML = "";
+      commandes.forEach(c => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${c.id}</td><td>${c.pointLivraison}</td><td>${c.total.toFixed(2)}</td><td>${c.statut}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+  </script>
+</body>
+</html>
