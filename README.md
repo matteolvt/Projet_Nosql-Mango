@@ -43,16 +43,6 @@ cd DeliveCROUS
 npm install
 npm run dev
 
-Back end .env :
-
-DATABASE_URL="mysql://root:motdepasse@host:port/railway?sslaccept=accept_invalid_certs"
-JWT_SECRET="votre_cle_secrete"
-PORT=8080
-
-Front End .env :
-
-VITE_API_URL="https://projetnosql-mango-production.up.railway.app"
-
 Auteurs :
 
 Mattéo Livrozet
