@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
-import ProductDetailCard from "../../components/ProductDetailCard/ProductDetailCard";
+import Navbar from "../../Components/Navbar/Navbar";
+import ProductDetailCard from "../../Components/ProductDetailCard/ProductDetailCard";
 import { getPlatById } from "../../api";
 import { useCart } from "../../context/CartContext";
 import "./ProductDetail.css";
