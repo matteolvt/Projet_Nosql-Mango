@@ -205,12 +205,13 @@ app.get("/api/auth/me", verifyToken, async (req, res) => {
 
 /* ----------------------  PLATS ---------------------- */
 
-app.get("/api/plats", async (_req, res) => {
+app.get("/api/plats", async (req, res) => {
   try {
     const plats = await prisma.plat.findMany();
     res.json(plats);
-  } catch (err) {
-    res.status(500).json({ error: "Erreur serveur" });
+  } catch (error) {
+    console.error("Erreur serveur détaillée :", error);
+    res.status(500).json({ error: error.message, details: error });
   }
 });
 
