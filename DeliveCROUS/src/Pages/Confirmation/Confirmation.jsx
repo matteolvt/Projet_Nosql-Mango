@@ -2,7 +2,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import ConfirmHero from "../../Components/Confirmation/ConfirmHero";
 import ConfirmInfo from "../../Components/Confirmation/ConfirmInfo";
 import ConfirmActions from "../../Components/Confirmation/ConfirmActions";
-import "../../Components/Confirmation/confirm.css";
+import "../../Components/Confirmation/Confirm.css";
 import { useLocation } from "react-router-dom";
 import sucessImg from "../../assets/images/Confirmation.png";
 
