@@ -10,6 +10,11 @@ require("dotenv").config();
 const app = express();
 const prisma = new PrismaClient();
 
+app.get("/", (req, res) => {
+  res.send("🚀 API DeliveCROUS en ligne et connectée à Railway !");
+});
+
+/* ----------------------  MIDDLEWARES GLOBAUX ---------------------- */
 app.use(express.json());
 
 app.use(
