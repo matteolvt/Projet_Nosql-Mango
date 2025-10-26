@@ -217,6 +217,47 @@ app.get("/api/auth/me", verifyToken, async (req, res) => {
   }
 });
 
+// 🆕 Inscription utilisateur (route manquante)
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    const { email, password, nom, prenom } = req.body;
+    if (!email || !password || !nom || !prenom) {
+      return res.status(400).json({ error: "Champs manquants" });
+    }
+
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email déjà utilisé" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        nom,
+        prenom,
+        role: "student",
+      },
+    });
+
+    // connexion auto après inscription
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "2h" }
+    );
+
+    const { password: _, ...safeUser } = user;
+    res.status(201).json({ user: safeUser, token });
+  } catch (err) {
+    console.error("Erreur /auth/register :", err);
+    res.status(500).json({ error: "Erreur lors de l'inscription" });
+  }
+});
+
+
 /* ----------------------  PLATS ---------------------- */
 
 app.get("/api/plats", async (req, res) => {
