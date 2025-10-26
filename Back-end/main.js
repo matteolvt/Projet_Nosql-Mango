@@ -17,9 +17,23 @@ app.get("/", (req, res) => {
 /* ----------------------  MIDDLEWARES GLOBAUX ---------------------- */
 app.use(express.json());
 
+// ✅ Configuration CORS pour autoriser Vercel + localhost
+const allowedOrigins = [
+  "http://localhost:5173", // pour le dev local
+  "https://projet-nosql-mango.vercel.app", // ton domaine Vercel
+];
+
 app.use(
   cors({
-    origin: process.env.FRONT_ORIGIN || "http://localhost:5173",
+    origin: function (origin, callback) {
+      // autorise les requêtes sans origin (Postman, mobile, etc.)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn("❌ Origin non autorisée :", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
