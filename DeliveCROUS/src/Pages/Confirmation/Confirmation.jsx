@@ -5,6 +5,7 @@ import ConfirmActions from "../../Components/Confirmation/ConfirmActions";
 import "../../Components/Confirmation/Confirm.css";
 import { useLocation } from "react-router-dom";
 import sucessImg from "../../assets/images/Confirmation.png";
+import api from "../../axios"; // 🔗 on utilise l’instance Axios connectée à ton back
 
 export default function Confirmation() {
   const { state } = useLocation();

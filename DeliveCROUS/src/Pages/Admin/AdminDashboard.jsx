@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../Components/Navbar/Navbar";
+import api from "../../axios"; // 🔗 on utilise l’instance Axios connectée à ton back
 import "./AdminDashboard.css";
 import {
   getUsers,

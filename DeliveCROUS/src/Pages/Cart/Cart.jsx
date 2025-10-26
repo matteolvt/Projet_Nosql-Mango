@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { createCommande } from "../../api";
 import "./Cart.css";
+import api from "../../axios"; // 🔗 on utilise l’instance Axios connectée à ton back
 
 export default function Cart() {
   const { items, setQty, removeItem, clear, total } = useCart();
