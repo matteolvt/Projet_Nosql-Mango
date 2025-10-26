@@ -32,15 +32,15 @@ cd Projet_Nosql-Mango
 
 Pour démarrer le back :
 
-cd back-end
-npm install
-npx prisma generate
+cd back-end,
+npm install,
+npx prisma generate,
 npm run dev
 
 Pour démarrer le front :
 
-cd DeliveCROUS
-npm install
+cd DeliveCROUS,
+npm install,
 npm run dev
 
 Auteurs :
