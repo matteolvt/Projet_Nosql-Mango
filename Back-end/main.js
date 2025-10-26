@@ -1,5 +1,4 @@
 // main.js
-import { PrismaClient } from "@prisma/client";
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const cors = require("cors");
@@ -10,25 +9,6 @@ require("dotenv").config();
 
 const app = express();
 const prisma = new PrismaClient();
-
-
-let prisma;
-async function initPrisma() {
-  for (let i = 0; i < 5; i++) {
-    try {
-      prisma = new PrismaClient();
-      await prisma.$connect();
-      console.log("✅ Prisma connecté à la base !");
-      return prisma;
-    } catch (error) {
-      console.error("⏳ Tentative Prisma échouée, retry...", i + 1);
-      await new Promise((r) => setTimeout(r, 2000)); // attend 2s avant retry
-    }
-  }
-  throw new Error("❌ Échec de connexion à Prisma après 5 tentatives");
-}
-
-export default await initPrisma();
 
 app.get("/", (req, res) => {
   res.send("🚀 API DeliveCROUS en ligne et connectée à Railway !");
