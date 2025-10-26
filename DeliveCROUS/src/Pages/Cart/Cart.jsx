@@ -1,8 +1,8 @@
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../Components/Navbar/Navbar";
 import { useCart } from "../../context/CartContext";
-import CartItem from "../../components/CartItem/CartItem";
-import CartSummary from "../../components/CartSummary/CartSummary";
-import AddressForm from "../../components/AddressForm/AddressForm";
+import CartItem from "../../Components/CartItem/CartItem";
+import CartSummary from "../../Components/CartSummary/CartSummary";
+import AddressForm from "../../Components/AddressForm/AddressForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";

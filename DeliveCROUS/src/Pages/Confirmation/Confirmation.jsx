@@ -1,15 +1,15 @@
-import Navbar from '../../components/Navbar/Navbar'
-import ConfirmHero from '../../components/Confirmation/ConfirmHero'
-import ConfirmInfo from '../../components/Confirmation/ConfirmInfo'
-import ConfirmActions from '../../components/Confirmation/ConfirmActions'
-import '../../components/Confirmation/confirm.css'
-import { useLocation } from 'react-router-dom'
-import sucessImg from '../../assets/images/Confirmation.png'
+import Navbar from "../../Components/Navbar/Navbar";
+import ConfirmHero from "../../Components/Confirmation/ConfirmHero";
+import ConfirmInfo from "../../Components/Confirmation/ConfirmInfo";
+import ConfirmActions from "../../Components/Confirmation/ConfirmActions";
+import "../../Components/Confirmation/confirm.css";
+import { useLocation } from "react-router-dom";
+import sucessImg from "../../assets/images/Confirmation.png";
 
 export default function Confirmation() {
-  const { state } = useLocation()
-  const address = state?.address
-  const balance = state?.balance
+  const { state } = useLocation();
+  const address = state?.address;
+  const balance = state?.balance;
 
   return (
     <div className="confirm-page">
@@ -25,5 +25,5 @@ export default function Confirmation() {
         <ConfirmActions />
       </main>
     </div>
-  )
+  );
 }

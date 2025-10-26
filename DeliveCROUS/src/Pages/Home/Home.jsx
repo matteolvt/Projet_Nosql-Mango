@@ -1,6 +1,6 @@
 import "./Home.css";
-import Navbar from "../../components/Navbar/Navbar";
-import ProductCard from "../../components/ProductCard/ProductCard";
+import Navbar from "../../Components/Navbar/Navbar";
+import ProductCard from "../../Components/ProductCard/ProductCard";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../axios"; // 🔗 on utilise l’instance Axios connectée à ton back
